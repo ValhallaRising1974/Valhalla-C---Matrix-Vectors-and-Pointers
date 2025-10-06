@@ -1,0 +1,23 @@
+name: Compile and Build C Project
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v3
+
+      - name: Instalar GCC
+        run: sudo apt-get install build-essential
+
+      - name: Compilar os arquivos .c
+        run: gcc -o valhalla main.c functions.c
+
+      - name: Executar o programa
+        run: ./valhalla
