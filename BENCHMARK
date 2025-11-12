@@ -1,0 +1,31 @@
+#define _POSIX_C_SOURCE 200809L
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+#include <stdint.h>
+#include "lyra_asm.h"
+
+static inline double sec_now(void){
+    struct timespec ts; clock_gettime(CLOCK_MONOTONIC, &ts);
+    return ts.tv_sec + ts.tv_nsec*1e-9;
+}
+
+int main(void){
+    enum { N = 10*1000*1000 };
+    static char buf[1<<20];
+    memset(buf, 'A', sizeof(buf)-1);
+    buf[sizeof(buf)-1] = 0;
+
+    double t0 = sec_now();
+    size_t sum1 = 0;
+    for (int i=0;i<1000;i++) sum1 += fast_strlen(buf);
+    double t1 = sec_now();
+
+    size_t sum2 = 0;
+    for (int i=0;i<1000;i++) sum2 += strlen(buf);
+    double t2 = sec_now();
+
+    printf("fast_strlen: %.3f ms, ref=%zu\n", (t1-t0)*1000.0, sum1);
+    printf("libc strlen: %.3f ms, ref=%zu\n", (t2-t1)*1000.0, sum2);
+    return 0;
+}
