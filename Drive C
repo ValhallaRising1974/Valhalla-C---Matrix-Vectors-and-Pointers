@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <stddef.h>
+
+extern size_t rle_decompress(
+    const uint8_t *src,
+    char *dst,
+    unsigned int max_len
+);
+
+int main(void)
+{
+    const uint8_t compressed[] = {
+        3, 'A',
+        2, 'B',
+        4, 'C',
+        1, 'D',
+        0
+    };
+
+    char output[100];
+
+    size_t written = rle_decompress(
+        compressed,
+        output,
+        (unsigned int)sizeof(output)
+    );
+
+    printf("Bytes escritos: %zu\n", written);
+    printf("Resultado: %s\n", output);
+
+    return 0;
+}
