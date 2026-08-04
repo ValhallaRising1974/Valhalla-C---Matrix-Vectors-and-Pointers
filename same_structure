@@ -1,0 +1,6 @@
+int parse_packet(
+    const PacketHeader *header,
+    const uint8_t *payload,
+    uint64_t received_size,
+    ParsedHeader *output
+);
