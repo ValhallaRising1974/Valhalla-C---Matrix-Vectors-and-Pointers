@@ -1,0 +1,12 @@
+typedef struct {
+    uint8_t  version;       // offset 0
+    uint8_t  sensor_type;   // offset 1
+    uint16_t payload_size;  // offset 2
+    uint8_t  checksum;      // offset 4
+} PacketHeader;
+
+typedef struct {
+    uint8_t  version;
+    uint8_t  sensor_type;
+    uint16_t payload_size;
+} ParsedHeader;
